@@ -147,12 +147,8 @@ function ProjectModal({ projectId, cardPosition, onClose }) {
     
     document.addEventListener('keydown', handleEscape)
     
-    console.log("=== MODAL OPENING DEBUG ===")
-    console.log("Card Position received:", cardPosition)
-    console.log("DetailModalRef exists:", !!DetailModalRef.current)
-    
     // 모달 나타나는 애니메이션
-    if (DetailModalRef.current && cardPosition) {
+    if (cardPosition) {
       // 초기 상태 설정
       DetailModalRef.current.style.opacity = '0'
       closeRef.current.style.opacity = '0'
@@ -160,44 +156,35 @@ function ProjectModal({ projectId, cardPosition, onClose }) {
       
       // 모달 컨텐츠 영역 가져오기
       const modalContent = DetailModalRef.current.querySelector('.modal-content');
-      
-
-      // 정확한 카드 위치 가져오기
-    //  const cardPosition = document.querySelector(`[data-project-id="${projectId}"]`);
-    //  const cardPosition = cardElement.getBoundingClientRect();
-      console.log("Modal Content:", modalContent)
-      console.log("Card Position:", cardPosition)
 
       // CSS props로 모달 컨텐츠 초기 위치 설정 (카드 위치에서 시작)
       modalContent.style.position = 'fixed';
-      modalContent.style.setProperty('left', `${cardPosition.left}px`, 'important');
-      modalContent.style.setProperty('top', `${cardPosition.top}px`, 'important');
-      modalContent.style.width = `${cardPosition.width}px`;
-      modalContent.style.height = `${cardPosition.height}px`;
-      console.log("모달 초기위치 설정 이후", modalContent)
-    //  modalContent.style.transform = 'none';
-      setTimeout(() => {
-      DetailModalRef.current.style.opacity = '1';
-    }, 300);
+    modalContent.style.setProperty('--card-left', `${cardPosition.left}px`);
+    modalContent.style.setProperty('--card-top', `${cardPosition.top}px`);
+    modalContent.style.setProperty('--card-width', `${cardPosition.width}px`);
+    modalContent.style.setProperty('--card-height', `${cardPosition.height}px`);
+    
       
-      
-      // 모달 컨텐츠 확장 애니메이션 (카드 → 모달)
+    DetailModalRef.current.style.opacity = '1';
+    //setTimeout(() => {
+    //}, 500);// transition 시간만큼 대기
+
+    // 모달 컨텐츠 확장 애니메이션 (카드 → 모달)
       animate(modalContent, {
-        left: 'auto',
-        top: 'auto',
-        width: '90vw',
-        height: '90vh',
-        duration: 5000,
-        ease: 'outBack'
+        opacity: [0, 1],
+        transition: 'all 0.5s ease',
+        scale: (1,1),
+        duration: 500,
       })
+      
+      modalContent.classList.add('expanded');
       
       // 닫기 버튼 애니메이션
       animate(closeRef.current, {
-        translateY: ['100%', 0],
         opacity: [0, 1],
         duration: 2000,
         ease: 'outSine',
-        delay: 2000
+        //delay: 2000
       })
     }
     
@@ -207,46 +194,55 @@ function ProjectModal({ projectId, cardPosition, onClose }) {
   if (!project) return null
   
   const handleClose = () => {
-    console.log("=== MODAL CLOSING DEBUG ===")
-    console.log("Card Position for close:", cardPosition)
     
     // 모달 닫기 애니메이션
     if (DetailModalRef.current && cardPosition) {
       // 닫기 버튼 숨기기
-      animate(closeRef.current, {
-        translateY: '100%',
-        opacity: 0,
-        duration: 250,
-        ease: 'outSine'
-      })
+    //  animate(closeRef.current, {
+    //    translateY: '100%',
+    //    opacity: 0,
+    //    duration: 250,
+    //    ease: 'outSine'
+    //  })
+
       
       // 모달 컨텐츠 영역 가져오기
       const modalContent = DetailModalRef.current.querySelector('.modal-content');
-      console.log("Modal Content for close:", modalContent)
-      
-      // 모달 컨텐츠 축소 애니메이션 (모달 → 카드)
-      animate(modalContent, {
-        left: `${cardPosition.left}px`,
-        top: `${cardPosition.top}px`,
-        width: `${cardPosition.width}px`,
-        height: `${cardPosition.height}px`,
-        duration: 400,
-        ease: 'inQuad',
-        onComplete: () => {
-          // 스타일 초기화
-          modalContent.style.position = '';
-          modalContent.style.left = '';
-          modalContent.style.top = '';
-          modalContent.style.width = '';
-          modalContent.style.height = '';
-          modalContent.style.transform = '';
-          onClose()
-        }
-      })
 
+    // 모달 컨텐츠 축소 애니메이션 (모달 → 카드)
+    //  animate(modalContent, {
+    //    //left: `${cardPosition.left}px`,
+    //    //top: `${cardPosition.top}px`,
+    //    //width: `${cardPosition.width}px`,
+    //    //height: `${cardPosition.height}px`,
+    //    duration: 2000,
+    //    ease: 'inQuad',
+        
+        //onComplete: () => {
+          // 스타일 초기화
+        //  modalContent.style.position = '';
+        //  modalContent.style.left = '';
+        //  modalContent.style.top = '';
+        //  modalContent.style.width = '';
+        //  modalContent.style.height = '';
+        //  modalContent.style.transform = '';
+        //  onClose()
+        //}
+    //  })
+      
+      
+      modalContent.classList.remove('expanded');
+    //  if(DetailModalRef.current.style.opacity === '0'){
+    //    onClose()
+    //  }
+        setTimeout(() => {
+            modalContent.style.opacity = '0';
+            setTimeout(() => onClose(), 500); // transition 시간만큼 대기
+        }, 0);
     } else {
       onClose()
     }
+    //DetailModalRef.current.style.opacity = '0';
   }
   
   return (
