@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
@@ -26,6 +26,20 @@ function App() {
   const closeModal = () => {
     setModalState({ isOpen: false, projectId: null, cardPosition: null })
   }
+
+  // 모달이 열릴 때 body 스크롤 방지
+  useEffect(() => {
+    if (modalState.isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // 컴포넌트 언마운트 시 스타일 초기화
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [modalState.isOpen])
 //  console.log("2",modalState.cardPosition ? modalState.cardPosition.left : "Null")
 
   return (

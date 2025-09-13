@@ -4,9 +4,11 @@ import './ProjectCard.css'
 function ProjectCard({ 
   title, 
   description, 
+  duration,
   tech, 
-  icon, 
+  image, 
   projectId, 
+  githubUrl,
   onProjectClick 
 }) {
   const cardRef = useRef(null)
@@ -14,7 +16,6 @@ function ProjectCard({
   const handleClick = () => {
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect()
-      console.log("건체크", cardRef.current)
       const position = {
         left: rect.left,
         top: rect.top,
@@ -29,26 +30,37 @@ function ProjectCard({
   return (
     <div className="project-card" ref={cardRef}>
       <div className="project-image">
-        <div className="project-placeholder">
-          <i className={icon}></i>
-        </div>
+        {image && !image.includes('fas fa-') ? (
+          <img src={image} alt={title} className="project-img" />
+        ) : (
+          <div className="project-placeholder">
+            <i className={image || 'fas fa-code'}></i>
+          </div>
+        )}
       </div>
       <div className="project-content">
         <h3>{title}</h3>
+        <div className="project-duration">
+            {duration}
+            <div className="divide-line"></div>
+        </div>
+        
         <p>{description}</p>
         <div className="project-tech">
-          {tech.map((techItem, index) => (
+          {tech.slice(0, 3).map((techItem, index) => (
             <span key={index}>{techItem}</span>
           ))}
+          {tech.length > 3 && <span className="tech-more">...</span>}
+          {/*{tech.length > 3 && <span className="tech-more">{".".repeat(50)}</span>}*/}
         </div>
         <div className="project-links">
           <button 
             className="btn btn-small" 
             onClick={handleClick}
           >
-            Live Demo
+            Detail
           </button>
-          <a href="#" className="btn btn-small btn-outline">
+          <a href={githubUrl} className="btn btn-small btn-outline" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
         </div>

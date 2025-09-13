@@ -1,0 +1,151 @@
+.tech-badges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.tech-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+.tech-category {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tech-category h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: white;
+  text-align: center;
+}
+
+.tech-slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tech-slider {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  flex: 1;
+  max-width: 100%;
+}
+
+.slider-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.slider-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.slider-btn:active {
+  transform: scale(0.95);
+}
+
+.tech-slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tech-slider::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.tech-slider::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.tech-slider::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.tech-slider-track {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  min-width: max-content;
+}
+
+.tech-badge-link {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.tech-badge-link:hover {
+  transform: translateY(-5px);
+}
+
+.tech-badge-img {
+  height: 40px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.tech-badge-img:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* 300px 이하에서 네비게이션 버튼 숨김 */
+@media (max-width: 300px) {
+  .slider-btn {
+    display: none;
+  }
+  
+  .tech-slider-wrapper {
+    gap: 0;
+  }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .tech-badges-container {
+    gap: 2rem;
+    padding: 0 15px;
+  }
+  
+  .tech-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .tech-category h3 {
+    font-size: 1.5rem;
+  }
+  
+  .tech-badge-img {
+    height: 35px;
+  }
+  
+  .tech-slider-track {
+    gap: 0.8rem;
+  }
+}

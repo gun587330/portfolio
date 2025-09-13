@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { animate } from 'animejs'
-import { projects } from '../../../data/projects.js'
+import { projects } from '../../../data/projectData.js'
 import ModalNavBar from './modalNavBar/ModalNavBar.jsx'
 import './ProjectModal.css'
 
