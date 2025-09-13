@@ -62,7 +62,7 @@ export const projects = {
       <h3>팀 구성</h3>
       <p>프론트엔드 2명, 백엔드 2명, 디자이너 1명</p>
     `,
-    image: '/src/assets/images/projectsImage/NowSale.png',
+    image: 'https://i.ifh.cc/A3VWy6.png',
     demoUrl: '#',
     githubUrl: 'https://github.com/gun587330/NowSale_frontend'
   },
